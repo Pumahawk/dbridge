@@ -1,0 +1,19 @@
+kind: query
+metadata:
+  name: user-by-id
+spec:
+  path: "/users/{id}"
+  query:
+    sql: "#parse('/users/byId.vm')"
+  validators:
+  - _extends: byId
+  schema:
+    _input: "#foundFirst(#group(#input, 'USER_ID'), 'User not found')"
+    id: "#input['USER_ID']"
+    name: "#input['USER_NAME']"
+    articles:
+      _input: "#input.nested.?[#this['USER_ID'] != null]"
+      id: "#input['ARTICLE_ID']"
+      title: "#input['ARTICLE_TITLE']"
+    links:
+      self: "'/users/' + #input['USER_ID']"

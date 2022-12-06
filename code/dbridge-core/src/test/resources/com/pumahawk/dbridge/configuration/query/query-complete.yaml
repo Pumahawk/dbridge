@@ -1,0 +1,20 @@
+kind: query
+metadata:
+  name: query-complete
+spec:
+spec:
+  path: "/users/{id:[0-9]+}"
+  query:
+    sql: "#parse('/users/byId.vm')"
+  validators:
+  - _extends: byId
+  schema:
+    _input: "#foundFirst(#group(#input, 'ID'), 'User not found')"
+    id: "#input['ID']"
+    name: "#input['NAME']"
+    articles:
+      _input: "#input.nested.?[#this['ARTICLE_ID'] != null]"
+      id: "#input['ARTICLE_ID']"
+      title: "#input['ARTICLE_TITLE']"
+    links:
+      self: "'/users/' + #input['ID']"

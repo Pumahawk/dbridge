@@ -1,0 +1,14 @@
+kind: query
+metadata:
+  name: users
+spec:
+  path: "/users"
+  query: 
+    sql: "#parse('/users/list.vm')"
+  validators:
+  - _extends: search
+  schema:
+    id: "#input['ID']"
+    name: "#input['NAME']"
+    links:
+      self: "'/users/' + #input['ID']"

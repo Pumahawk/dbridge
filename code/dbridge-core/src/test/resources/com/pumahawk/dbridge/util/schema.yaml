@@ -1,0 +1,30 @@
+simple:
+  _input: "'Hello, World!'"
+  name: "#input"
+withInput:
+  _input: "#input[1]"
+  name: "#input.name"
+  surname: "#input.surname"
+withInputArray:
+  _input: "#input"
+  name: "#input.name"
+  surname: "#input.surname"
+withNullInput:
+  _input: "#input"
+  name: "#input.name"
+  surname: "#input.surname"
+withNullInputInSpel:
+  _input: "not #input.empty ? #input[0] : null"
+  name: "#input.name"
+  surname: "#input.surname"
+inlineMap:
+  _input: "{name: 'n1', surname: 's1'}"
+  name: "#input['name']"
+  surname: "#input['surname']"
+inlineList:
+  _input: "{'1','2'}"
+  value: "#input"
+inlineListWithMap:
+  _input: "{{name: 'n1', surname: 's1'}}"
+  name: "#input['name']"
+  surname: "#input['surname']"

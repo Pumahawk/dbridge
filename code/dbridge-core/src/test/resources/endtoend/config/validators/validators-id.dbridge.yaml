@@ -1,0 +1,13 @@
+kind: global-validator
+metadata:
+  name: basic-id-validators
+spec:
+  globalValidators:
+  - name: byId
+    validators:
+    - name: id
+      _input: "#p['id']"
+      convert: "#p['id'] = #toNumber(#input)"
+      validator:
+        spel: "#input eq null || #isNumber(#input)"
+        message: "Id must be a valid number. Current value: #{#input}"

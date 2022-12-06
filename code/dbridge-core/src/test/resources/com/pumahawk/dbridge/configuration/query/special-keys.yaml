@@ -1,0 +1,12 @@
+kind: query
+metadata:
+  name: query-complete
+spec:
+spec:
+  path: "/path"
+  query:
+    sql: "sql_value"
+  schema:
+    value: "'simple value'"
+    fields:
+      field1: "'field1'"

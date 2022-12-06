@@ -1,0 +1,28 @@
+#macro( ifAndLike $property $column $sqlname)
+    #if($property)
+        AND LOWER($column) like CONCAT('%', LOWER($sqlname),'%')
+    #end
+#end
+
+#macro( ifAndEqual $property $column $sqlname)
+    #if($property)
+        AND $column = $sqlname
+    #end
+#end
+
+#macro( limit )
+    limit #if($limit != $null):limit#{else}100#end offset #if($offset != $null):offset#{else}0#end
+#end
+
+#macro( search )
+    SELECT * FROM (
+        $!bodyContent
+        #limit()
+    ) as Q1 RIGHT JOIN (
+        SELECT
+            count(*) as TOTAL
+        FROM (
+            $!bodyContent
+        ) as Q3
+    ) AS Q2 ON 1=1
+#end

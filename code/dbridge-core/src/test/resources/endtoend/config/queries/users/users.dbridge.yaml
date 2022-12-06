@@ -1,0 +1,18 @@
+kind: query
+metadata:
+  name: users
+spec:
+  path: "/users"
+  query: 
+    sql: "#parse('/users/list.vm')"
+  validators:
+  - _extends: search
+  schema:
+    _input: "{rows:#input}"
+    total: "#input['rows'][0]['TOTAL']"
+    rows:
+      _input: "#input['rows'][0]['USER_ID'] != null ? #input['rows'] : {}"
+      id: "#input['USER_ID']"
+      name: "#input['USER_NAME']"
+      links:
+        self: "'/users/' + #input['USER_ID']"

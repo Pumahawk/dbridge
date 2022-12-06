@@ -1,0 +1,12 @@
+SELECT
+  #if($c)
+    $c
+  #else
+    *
+  #end
+FROM
+  "$table"
+#if($w)
+ WHERE $w
+#end
+#limit()

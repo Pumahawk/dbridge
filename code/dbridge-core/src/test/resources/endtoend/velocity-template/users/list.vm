@@ -1,0 +1,7 @@
+#@search()
+    #parse('/users/user.vm')
+    WHERE
+        1 = 1
+        #ifAndEqual($id '"USERS"."ID"' ':id')
+        #ifAndLike($name '"USERS"."NAME"' ':name')
+#end

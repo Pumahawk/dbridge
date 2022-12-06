@@ -1,0 +1,8 @@
+#parse("/users/utils.vm")
+#parse("/articles/utils.vm")
+SELECT
+  #userColumns(),
+  #articleColumns()
+FROM "USERS" LEFT JOIN "ARTICLES" ON "USERS"."ID" = "ARTICLES"."AUTHOR_ID"
+WHERE "USERS"."ID" = :id
+

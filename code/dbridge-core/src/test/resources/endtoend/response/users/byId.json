@@ -1,0 +1,19 @@
+{
+    "data": {
+        "name": "Marco",
+        "articles": [
+            {
+                "id": 1,
+                "title": "First"
+            },
+            {
+                "id": 2,
+                "title": "Second"
+            }
+        ],
+        "links": {
+            "self": "/users/1"
+        },
+        "id": 1
+    }
+}

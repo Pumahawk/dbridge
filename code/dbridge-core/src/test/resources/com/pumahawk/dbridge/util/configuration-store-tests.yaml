@@ -1,0 +1,85 @@
+global:
+- kind: global-validator
+  metadata:
+    name: gv1
+  spec:
+    globalValidators:
+    - name: emptyext
+      validators: null
+    - name: byId
+      validators:
+      - name: id
+      - name: id2
+    - name: byName
+      validators:
+      - name: name
+- kind: global-validator
+  metadata:
+    name: gv3
+  spec:
+    globalValidators:
+    - name: myext
+      validators:
+      - name: namemyext
+- kind: global-validator
+  metadata:
+    name: gv4
+  spec:
+    globalValidators:
+    - name: ext2
+      validators:
+      - _extends: myext
+        name: ext2Name
+queries:
+- kind: query
+  metadata:
+    name: qe1
+  spec:
+    path: "/path"
+    query:
+      sql: "sql_value"
+    validators:
+    - _extends: byId
+      name: basicExtension
+    schema: {}
+- kind: query
+  metadata:
+    name: qe2
+  spec:
+    path: "/path"
+    query:
+      sql: "sql_value"
+    validators:
+    - _extends: ext2
+      name: multipleExtension
+    - name: query_2
+    schema: {}
+- kind: query
+  metadata:
+    name: qe3
+  spec:
+    path: "/path"
+    query:
+      sql: "sql_value"
+    validators:
+    - _extends: ext2
+      name: multipleExtension
+    - name: query_2
+    schema: {}
+- kind: query
+  metadata:
+    name: qe4
+  spec:
+    path: "/path"
+    query:
+      sql: "sql_value"
+    validators:
+    - _extends: ext2
+      name: multipleExtension
+    - name: query_2
+    - _extends: ext2
+      name: repeate_extension
+    - _extends: emptyext
+      name: empty-ext
+    schema: {}
+

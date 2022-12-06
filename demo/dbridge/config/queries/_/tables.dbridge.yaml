@@ -1,0 +1,9 @@
+kind: query
+metadata:
+  name: special-tables
+spec:
+  path: "/_/tables/{table}"
+  query:
+    sql: "#parse('/_/table.vm')"
+  validators: []
+  schema: "#input"

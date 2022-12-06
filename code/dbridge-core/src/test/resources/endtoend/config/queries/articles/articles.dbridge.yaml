@@ -1,0 +1,22 @@
+kind: query
+metadata:
+  name: articles
+spec:
+  path: "/articles"
+  query:
+    sql: "#parse('/articles/list.vm')"
+  validators:
+  - _extends: search
+  schema:
+    _input: "{rows:#input}"
+    total: "#input['rows'][0]['TOTAL']"
+    rows:
+      _input: "#input['rows'][0]['ARTICLE_ID'] != null ? #input['rows'] : {}"
+      id: "#input['ARTICLE_ID']"
+      title: "#input['ARTICLE_TITLE']"
+      author:
+        name: "#input['USER_NAME']"
+        links:
+          self: "'/users/' + #input['USER_ID']"
+      links:
+        self: "'/articles/' + #input['ARTICLE_ID']"

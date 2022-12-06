@@ -1,0 +1,25 @@
+kind: global-validator
+metadata:
+  name: basic-search-validators
+spec:
+  globalValidators:
+  - name: search
+    validators:
+    - name: limit
+      _input: "#p['limit']"
+      convert: "#p['limit'] = #toNumber(#input)"
+      validator:
+        spel: "#input eq null || #isNumber(#input)"
+        message: "Limit must be a valid number. Current value: #{#input}"
+    - name: offset
+      _input: "#p['offset']"
+      convert: "#p['offset'] = #toNumber(#input)"
+      validator:
+        spel: "#input eq null || #isNumber(#input)"
+        message: "Offset must be a valid number. Current value: #{#input}"
+    - name: id
+      _input: "#p['id']"
+      convert: "#p['id'] = #toNumber(#input)"
+      validator:
+        spel: "#input eq null || #isNumber(#input)"
+        message: "Id must be a valid number. Current value: #{#input}"

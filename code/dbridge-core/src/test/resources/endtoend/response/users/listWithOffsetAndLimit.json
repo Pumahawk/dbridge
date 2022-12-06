@@ -1,0 +1,14 @@
+{
+    "data": {
+        "total": 2,
+        "rows": [
+            {
+                "name": "Enrico",
+                "links": {
+                    "self": "/users/2"
+                },
+                "id": 2
+            }
+        ]
+    }
+}

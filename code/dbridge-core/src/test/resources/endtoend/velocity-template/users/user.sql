@@ -1,0 +1,4 @@
+SELECT 
+  "USERS"."ID" as "ID",
+  "USERS"."NAME" as "NAME"
+FROM "USERS"

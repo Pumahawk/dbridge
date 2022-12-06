@@ -1,0 +1,20 @@
+version: "3.3"
+services:
+  postgres:
+    image: postgres
+    environment:
+      POSTGRES_PASSWORD: postgres
+  adminer:
+    image: adminer
+    ports:
+      - 8081:8080
+  dbridge:
+    image: docker.io/pumahawk/dbridge
+    environment:
+      JAVA_TOOL_OPTIONS: >
+        -Dloader.path=/app/lib
+        -Dspring.config.additional-location=file:/app/config/
+    ports:
+    - "8080:8080"
+    volumes:
+    - "./dbridge:/app"

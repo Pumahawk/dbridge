@@ -1,0 +1,4 @@
+#parse("/users/utils.vm")
+SELECT 
+  #userColumns()
+FROM "USERS"

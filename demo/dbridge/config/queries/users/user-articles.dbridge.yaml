@@ -1,0 +1,18 @@
+kind: query
+metadata:
+  name: user-articles
+spec:
+  path: "/users/{id:[0-9]+}/articles"
+  query:
+    sql: "#parse('/users/userArticles.vm')"
+  validators:
+  - _extends: search
+  schema:
+    id: "#input['ID']"
+    title: "#input['TITLE']"
+    author:
+      name: "#input['AUTHOR_NAME']"
+      links:
+        self: "'/users/' + #input['AUTHOR_ID']"
+    links:
+      self: "'/articles/' + #input['ID']"

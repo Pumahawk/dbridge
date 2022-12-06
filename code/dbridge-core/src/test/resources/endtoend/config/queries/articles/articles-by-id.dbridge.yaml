@@ -1,0 +1,19 @@
+kind: query
+metadata:
+  name: articles-by-id
+spec:
+  path: "/articles/{id:[0-9]+}"
+  query:
+    sql: "#parse('/articles/byId.vm')"
+  validators:
+  - _extends: byId
+  schema:
+    _input: "#foundFirst(#input, 'Article not found')"
+    id: "#input['ARTICLE_ID']"
+    title: "#input['ARTICLE_TITLE']"
+    author:
+      name: "#input['USER_NAME']"
+      links:
+        self: "'/users/' + #input['USER_ID']"
+    links:
+      self: "'/articles/' + #input['ARTICLE_ID']"

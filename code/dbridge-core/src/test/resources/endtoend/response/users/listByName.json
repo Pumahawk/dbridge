@@ -1,0 +1,14 @@
+{
+    "data": {
+        "total": 1,
+        "rows": [
+            {
+                "name": "Marco",
+                "links": {
+                    "self": "/users/1"
+                },
+                "id": 1
+            }
+        ]
+    }
+}

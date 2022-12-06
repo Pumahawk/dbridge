@@ -1,0 +1,2 @@
+#parse('/articles/article.vm')
+WHERE "ARTICLES"."ID" = :id

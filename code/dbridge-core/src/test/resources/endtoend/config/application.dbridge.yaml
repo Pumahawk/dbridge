@@ -1,0 +1,8 @@
+kind: dbridge-config
+metadata:
+  name: demo-configuration
+spec:
+  database:
+  - name: postgres
+    configurationId: db.configuration.postgres
+    default: true

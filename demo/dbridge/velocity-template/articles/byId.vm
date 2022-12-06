@@ -1,0 +1,2 @@
+#include('/articles/article.sql')
+WHERE "ARTICLES"."ID" = :id

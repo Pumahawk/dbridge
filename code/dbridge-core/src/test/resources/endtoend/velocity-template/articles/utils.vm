@@ -1,0 +1,4 @@
+#macro( articleColumns )
+  "ARTICLES"."ID" as "ARTICLE_ID",
+  "ARTICLES"."TITLE" as "ARTICLE_TITLE"
+#end

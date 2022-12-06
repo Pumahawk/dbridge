@@ -1,0 +1,6 @@
+#include('/users/user.sql')
+WHERE
+    1 = 1
+    #ifAndEqual($id '"USERS"."ID"' ':id')
+    #ifAndLike($name '"USERS"."NAME"' ':name')
+#limit()

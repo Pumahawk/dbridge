@@ -1,0 +1,10 @@
+kind: dbridge-config
+metadata:
+  name: demo-configuration
+spec:
+  database:
+  - name: h2
+    configurationId: h2-id
+    default: true
+  - name: postgres
+    configurationId: postgres-id

@@ -1,0 +1,4 @@
+#macro( userColumns )
+    "USERS"."ID" as "USER_ID",
+    "USERS"."NAME" as "USER_NAME"
+#end

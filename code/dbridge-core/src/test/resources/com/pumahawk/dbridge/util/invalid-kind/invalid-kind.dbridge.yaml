@@ -1,0 +1,4 @@
+metadata:
+  name: no-kind
+spec:
+  message: Invalid type of kind tests

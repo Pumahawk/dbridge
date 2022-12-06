@@ -1,0 +1,7 @@
+[project]
+id = "com.pumahawk.dbridge"
+name = "dbridge"
+
+[[build.env]]
+name = "BP_JVM_VERSION"
+value = "8.*"

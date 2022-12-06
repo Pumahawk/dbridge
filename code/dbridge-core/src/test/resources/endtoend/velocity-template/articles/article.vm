@@ -1,0 +1,7 @@
+#parse("/articles/utils.vm")
+#parse("/users/utils.vm")
+SELECT 
+    #articleColumns(),
+    #userColumns()
+FROM
+    "ARTICLES" JOIN "USERS" ON "ARTICLES"."AUTHOR_ID" = "USERS"."ID"
