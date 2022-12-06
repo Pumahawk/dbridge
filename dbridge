@@ -1,0 +1,2 @@
+#!/bin/sh
+java -Dloader.path=./lib -jar dbridge.jar "$@"

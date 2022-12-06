@@ -1,0 +1,11 @@
+kind: query
+metadata:
+  name: special-version
+spec:
+  path: "/version"
+  queries:
+  - sql: "#parse('/version.vm')"
+  validators: []
+  schema:
+    _input: "#input[0]"
+    version: "#input['version']"
