@@ -1,7 +1,7 @@
 #include('/articles/article.sql')
 WHERE
     1 = 1
-    #ifAndEqual($id '"ARTICLES"."ID"' ':id')
-    #ifAndLike($title '"ARTICLES"."TITLE"' ':title')
-    #ifAndLike($author '"USERS"."NAME"' ':author')
+    #ifAndEqual($id '"ARTICLES"."ID"')
+    #ifAndLike($title '"ARTICLES"."TITLE"')
+    #ifAndLike($author '"USERS"."NAME"')
 #limit()

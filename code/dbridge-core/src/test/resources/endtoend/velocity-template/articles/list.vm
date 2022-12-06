@@ -2,7 +2,7 @@
     #parse('/articles/article.vm')
     WHERE
         1 = 1
-        #ifAndEqual($id '"ARTICLES"."ID"' ':id')
-        #ifAndLike($title '"ARTICLES"."TITLE"' ':title')
-        #ifAndLike($author '"USERS"."NAME"' ':author')
+        #andIfContain($ids '"ARTICLES"."ID"')
+        #ifAndLike($title '"ARTICLES"."TITLE"')
+        #ifAndLike($author '"USERS"."NAME"')
 #end

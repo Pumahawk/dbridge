@@ -18,8 +18,8 @@ spec:
         spel: "#input eq null || #isNumber(#input)"
         message: "Offset must be a valid number. Current value: #{#input}"
     - name: id
-      _input: "#p['id']"
-      convert: "#p['id'] = #toNumber(#input)"
+      _input: "#p['_s']['id']"
+      convert: "#p['ids'] = #input.stream().map(#fun(#toNumber)).collect(#toList())"
       validator:
-        spel: "#input eq null || #isNumber(#input)"
-        message: "Id must be a valid number. Current value: #{#input}"
+        spel: "#input.size() == 0 || #input.stream().allMatch(#pred(#isNumber))"
+        message: "Id must be a valid number."

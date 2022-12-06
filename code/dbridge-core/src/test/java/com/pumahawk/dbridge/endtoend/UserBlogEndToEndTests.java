@@ -40,6 +40,17 @@ public class UserBlogEndToEndTests extends BlogPostgresEndToEndTests {
     }
 
     @Test
+    public void searchUsers_byId_badRequest() {
+        getResource("response/users/listById.json");
+        client().get().uri(b -> b
+                .path("/users")
+                .queryParam("id", "2", "aa")
+                .build())
+            .exchange()
+            .expectStatus().isBadRequest();
+    }
+
+    @Test
     public void searchWithLimitAndOffset() {
         String response = getResource("response/users/listWithOffsetAndLimit.json");
         client().get().uri(b -> b

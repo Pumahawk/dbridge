@@ -2,6 +2,6 @@
     #parse('/users/user.vm')
     WHERE
         1 = 1
-        #ifAndEqual($id '"USERS"."ID"' ':id')
-        #ifAndLike($name '"USERS"."NAME"' ':name')
+        #andIfContain($ids '"USERS"."ID"')
+        #ifAndLike($name '"USERS"."NAME"')
 #end

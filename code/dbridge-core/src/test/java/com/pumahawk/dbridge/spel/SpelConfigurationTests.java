@@ -49,7 +49,9 @@ public class SpelConfigurationTests {
             arguments("#this gt 2 and #this lt 8", 5, true),
             arguments("#group({{id:1, name:'a'},{id:1,name:'B'}}, 'id')[0].nested[1]['name']", null, "B"),
             arguments("#found(#this, 'check not found')", "exist", "exist"),
-            arguments("#foundFirst(#this, 'check not found')", Collections.singleton("exist"), "exist")
+            arguments("#foundFirst(#this, 'check not found')", Collections.singleton("exist"), "exist"),
+            arguments("#this.stream().map(#fun(#toNumber)).collect(#toList()).get(0)", Collections.singleton("1"), 1),
+            arguments("#this.filter(#pred(#isNumber)).map(#fun(#toNumber)).collect(#toList()).get(0)", Stream.of("a","10","b"), 10)
         );
     }
     

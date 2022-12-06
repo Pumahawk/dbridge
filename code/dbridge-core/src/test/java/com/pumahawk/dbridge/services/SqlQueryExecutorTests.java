@@ -99,6 +99,24 @@ public class SqlQueryExecutorTests extends JdbcH2Test {
         assertEquals("Francesco", result.get(0).get("NAME"));
     }
 
+    @Test
+    public void executeQueryUsingNamedSupporter() throws SQLException {
+
+        when(databaseConnector.getDefault()).thenAnswer(i -> Optional.of(getDataSource()));
+
+        getConnection().createStatement().execute("CREATE TABLE USERS (ID INT PRIMARY KEY, NAME VARCHAR(15))");
+        getConnection().createStatement().execute("INSERT INTO USERS VALUES(1, 'Matteo')");
+        getConnection().createStatement().execute("INSERT INTO USERS VALUES(1234, 'Francesco')");
+        getConnection().createStatement().execute("INSERT INTO USERS VALUES(2, 'Luca')");
+
+        String sql = "SELECT * FROM USERS WHERE ID = $_.use($id)";
+        Map<String, Object> params = Collections.singletonMap("id", 1234);
+        List<Map<String, Object>> result = sqlQueryExecutor.query(createQuerySpec(sql), params);
+        assertEquals(1, result.size());
+        assertEquals(1234, result.get(0).get("ID"));
+        assertEquals("Francesco", result.get(0).get("NAME"));
+    }
+
     private QuerySpec createQuerySpec(String sql) {
         QuerySpec qs = new QuerySpec();
         Query query = new Query();

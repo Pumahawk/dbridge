@@ -1,5 +1,8 @@
 package com.pumahawk.dbridge.endpoints;
 
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -25,10 +28,13 @@ public class HttpRequestQueryParameter implements QueryParameter {
     }
 
     @Override
-    public Map<String, String> params() {
-        return request
-            .getQueryParams()
-            .toSingleValueMap();
+    public Map<String, Object> params() {
+        HashMap<String, Object> maps = new HashMap<>();
+        maps.putAll(request
+        .getQueryParams()
+        .toSingleValueMap());
+        maps.put("_s", new NotNullListMap<>(request.getQueryParams()));
+        return maps;
     }
 
     private String match(String key) {
@@ -38,6 +44,22 @@ public class HttpRequestQueryParameter implements QueryParameter {
             .map(contextTemplate::match)
             .map(m -> m.get(key))
             .orElse("");
+    }
+
+    private static class NotNullListMap<T extends Object> extends HashMap<String, List<? extends Object>> {
+
+        public NotNullListMap(Map<? extends String, ? extends List<? extends Object>> arg0) {
+            super(arg0);
+        }
+
+        @Override
+        public List<? extends Object> get(Object key) {
+            List<? extends Object> l = super.get(key);
+            return l != null
+                ? l
+                : Collections.emptyList();
+        }
+        
     }
 
 }

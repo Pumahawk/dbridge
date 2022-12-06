@@ -1,0 +1,33 @@
+{
+    "data": {
+        "total": 2,
+        "rows": [
+            {
+                "id": 1,
+                "title": "First",
+                "author": {
+                    "name": "Marco",
+                    "links": {
+                        "self": "/users/1"
+                    }
+                },
+                "links": {
+                    "self": "/articles/1"
+                }
+            },
+            {
+                "id": 2,
+                "title": "Second",
+                "author": {
+                    "name": "Marco",
+                    "links": {
+                        "self": "/users/1"
+                    }
+                },
+                "links": {
+                    "self": "/articles/2"
+                }
+            }
+        ]
+    }
+}

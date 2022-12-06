@@ -34,4 +34,16 @@ public class ArticleBlogEndToEndTests extends BlogPostgresEndToEndTests {
             .expectBody()
             .json(response, false);
     }
+
+    @Test
+    public void multipleFilterById() {
+        String response = getResource("response/articles/listByMultipleId.json");
+        client().get().uri(b -> b
+                .path("/articles")
+                .queryParam("id", "1", "2")
+                .build())
+            .exchange()
+            .expectBody()
+            .json(response, false);
+    }
 }

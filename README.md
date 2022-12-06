@@ -94,9 +94,9 @@ Per migliorare l'organizzazione dei file è possibile scrivere la query in un fi
     #parse('/articles/article.vm')
     WHERE
         1 = 1
-        #ifAndEqual($id '"ARTICLES"."ID"' ':id')
-        #ifAndLike($title '"ARTICLES"."TITLE"' ':title')
-        #ifAndLike($author '"USERS"."NAME"' ':author')
+        #ifAndEqual($id '"ARTICLES"."ID"')
+        #ifAndLike($title '"ARTICLES"."TITLE"')
+        #ifAndLike($author '"USERS"."NAME"')
 #end
 
 ```

@@ -1,8 +1,10 @@
 package com.pumahawk.dbridge.endpoints;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.params.provider.Arguments.arguments;
 
+import java.util.List;
 import java.util.Map;
 import java.util.stream.Stream;
 
@@ -56,21 +58,28 @@ public class HttpRequestQueryParameterTests {
     }
 
     @Test
+    @SuppressWarnings("unchecked")
     public void parameterEmpty() {
         client.get().uri("/p/params/noparam").exchange();
-        assertEquals(0, wr().params().size());
+        assertEquals(1, wr().params().size());
+        assertEquals(0, ((Map<String, Object>) wr().params().get("_s")).size());
     }
 
     @Test
+    @SuppressWarnings("unchecked")
     public void parameterMultiple() {
         client.get().uri(b -> b
             .path("p/t/withparams")
             .queryParam("param1", "value1")
+            .queryParam("param1", "value3")
             .queryParam("param2", "value2")
             .build()).exchange();
-        Map<String, String> parameters = wr().params();
+        Map<String, Object> parameters = wr().params();
         assertEquals("value1", parameters.get("param1"));
         assertEquals("value2", parameters.get("param2"));
+        assertEquals("value1", ((Map<String, List<Object>>) parameters.get("_s")).get("param1").get(0));
+        assertEquals("value3", ((Map<String, List<Object>>) parameters.get("_s")).get("param1").get(1));
+        assertNotNull(((Map<String, List<Object>>) parameters.get("_s")).get("param3"));
     }
 
     private HttpRequestQueryParameter wr() {

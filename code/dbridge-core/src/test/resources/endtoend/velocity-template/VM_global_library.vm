@@ -1,12 +1,19 @@
-#macro( ifAndLike $property $column $sqlname)
+#macro( ifAndLike $property $column)
     #if($property)
-        AND LOWER($column) like CONCAT('%', LOWER($sqlname),'%')
+        AND LOWER($column) like CONCAT('%', LOWER($_.use($property)),'%')
     #end
 #end
 
-#macro( ifAndEqual $property $column $sqlname)
+#macro( ifAndEqual $property $column)
     #if($property)
-        AND $column = $sqlname
+        AND $column = $_.use($property)
+    #end
+#end
+
+
+#macro( andIfContain $property $column)
+    #if($property.size() > 0)
+        AND $column IN ($_.use($property))
     #end
 #end
 
