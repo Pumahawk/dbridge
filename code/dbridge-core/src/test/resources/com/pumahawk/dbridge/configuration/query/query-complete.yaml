@@ -4,6 +4,9 @@ metadata:
 spec:
 spec:
   path: "/users/{id:[0-9]+}"
+  methods:
+  - GET
+  - POST
   query:
     sql: "#parse('/users/byId.vm')"
   validators:

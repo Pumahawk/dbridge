@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.params.provider.Arguments.arguments;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Stream;
@@ -16,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.test.web.reactive.server.WebTestClient;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -80,6 +82,21 @@ public class HttpRequestQueryParameterTests {
         assertEquals("value1", ((Map<String, List<Object>>) parameters.get("_s")).get("param1").get(0));
         assertEquals("value3", ((Map<String, List<Object>>) parameters.get("_s")).get("param1").get(1));
         assertNotNull(((Map<String, List<Object>>) parameters.get("_s")).get("param3"));
+    }
+
+    @Test
+    public void getMethod_GET() {
+        client.get().uri("/path")
+        .exchange();
+        assertEquals(HttpMethod.GET, wr().method());
+    }
+
+    @Test
+    public void getMethod_POST() {
+        client.post().uri("/path")
+        .bodyValue(Collections.singletonMap("message", "hello-world"))
+        .exchange();
+        assertEquals(HttpMethod.POST, wr().method());
     }
 
     private HttpRequestQueryParameter wr() {

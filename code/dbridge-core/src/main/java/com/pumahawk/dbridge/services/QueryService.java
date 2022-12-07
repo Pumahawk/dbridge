@@ -44,6 +44,10 @@ public class QueryService {
             .getConfigurationStore()
             .getQueries()
             .map(QueryResource::getSpec)
+            .filter(s -> s.getMethods().size() > 0
+                ? s.getMethods().contains(parameters.method())
+                : true
+            )
             .filter(q -> new UriTemplate(q.getPath()).matches(parameters.path()))
             .findAny()
             .map(q -> {

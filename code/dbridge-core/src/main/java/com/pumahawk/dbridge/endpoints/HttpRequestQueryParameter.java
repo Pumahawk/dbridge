@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+import org.springframework.http.HttpMethod;
 import org.springframework.http.server.RequestPath;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.web.util.UriTemplate;
@@ -35,6 +36,11 @@ public class HttpRequestQueryParameter implements QueryParameter {
         .toSingleValueMap());
         maps.put("_s", new NotNullListMap<>(request.getQueryParams()));
         return maps;
+    }
+
+    @Override
+    public HttpMethod method() {
+        return request.getMethod();
     }
 
     private String match(String key) {

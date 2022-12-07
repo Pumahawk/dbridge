@@ -1,6 +1,9 @@
 package com.pumahawk.dbridge.configuration;
 
+import java.util.LinkedList;
 import java.util.List;
+
+import org.springframework.http.HttpMethod;
 
 public class QuerySpec implements Spec {
 
@@ -8,6 +11,7 @@ public class QuerySpec implements Spec {
     private Query query;
     private List<Validator> validators;
     private Schema schema;
+    private List<HttpMethod> methods = new LinkedList<>();
 
     public String getPath() {
         return path;
@@ -15,6 +19,14 @@ public class QuerySpec implements Spec {
 
     public void setPath(String path) {
         this.path = path;
+    }
+
+    public List<HttpMethod> getMethods() {
+        return methods;
+    }
+
+    public void setMethods(List<HttpMethod> methods) {
+        this.methods = methods;
     }
 
     public Query getQuery() {

@@ -12,6 +12,7 @@ import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.HttpMethod;
 
 import com.fasterxml.jackson.core.exc.StreamReadException;
 import com.fasterxml.jackson.databind.DatabindException;
@@ -31,6 +32,10 @@ public class QueryResourceTests {
         QuerySpec spec = queryResource.getSpec();
         assertEquals("/users/{id:[0-9]+}", spec.getPath());
         assertEquals("#parse('/users/byId.vm')", spec.getQuery().getSql());
+        List<HttpMethod> methods = spec.getMethods();
+        assertEquals(2, methods.size());
+        assertEquals(HttpMethod.GET, methods.get(0));
+        assertEquals(HttpMethod.POST, methods.get(1));
 
         Schema schema = spec.getSchema();
         assertTrue(schema.isSchema());
