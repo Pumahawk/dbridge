@@ -19,7 +19,7 @@
   - [Librerie esterne](#librerie-esterne)
   - [Dettaglio SPEL](#dettaglio-spel)
   - [Creazione query SQL usando Velocity](#creazione-query-sql-usando-velocity)
-    - [Utilizzare le variabili](#utilizzare-le-variabili)
+    - [Funzionamento elaborazione query](#funzionamento-elaborazione-query)
 
 ## Overview
 
@@ -516,9 +516,11 @@ Per consultare le funzioni aggiunte di default è possibile consultare il file [
 
 ## Creazione query SQL usando Velocity
 
-Velocity consiste in un template engine e il suo scopo è quello di permettere la creazione di un testo
-senza alcuna limitazione sul modo in cui viene scritta la query. Per questo motivo è importante sapere
-come scrivere una query per evitare di incorrere in errori comuni come il rischio di permettere l'SQL Injection.
+**Velocity** consiste in un template engine e il suo scopo è quello di permettere la creazione di un testo
+senza alcuna limitazione sul modo in cui il testo viene composto.
+
+Per questo motivo è importante sapere come scrivere una query per evitare di incorrere in errori comuni
+come il rischio di permettere l'SQL Injection.
 
 Su DBridge Velocity è stato configurato per poter utilizzare delle funzionalità utili alla scrittura di
 codice SQL.
@@ -526,31 +528,37 @@ codice SQL.
  Per la guida completa è consigliato visitare il sito ufficiale su
  ["User Guide - Contents"](https://velocity.apache.org/engine/2.3/user-guide.html).
 
-### Utilizzare le variabili
+### Funzionamento elaborazione query
 
-Le variabili della request, come i query parameters, possono essere utilizzati all'interno della query
-sql. 
+DBridge ha integrato **Velocity** e **NamedParameterJdbcTemplate** per semplificare la scrittura della 
+query.
 
+Tutte le variabili della request (come i query parameters) e quelle create dai validatori possono essere 
+usate all'interno di **Velocity** e **NamedParameterJdbcTemplate**.
+
+Esistono delle properties speciali che migliorano la gestione delle variabili:
+
+- **$_** : Oggetto di supporto.
+- **$_s** : Recupero dei query parameters sottoforma di lista. Utile se si vogliono utilizzare più
+   parametri contemporaneamente.
+
+**Filtrare utenti per codice fiscale**
+
+Il codice fiscale viene passato come query params nella variabile *cf*.  
+Può essere utilizzato all'interno della query grazie a **NamedParameterJdbcTemplate** scrivendo `:cf`.
+
+`curl http://localhost:8080/users?cf=xxxxxxxxxxxx`
+
+```sql
+SELECT * FROM USERS WHERE CF = :cf
 ```
-SELECT * FROM USERS
-WHERE 
-  1 = 1
-  #if($id)
-      AND ID = :id
-  #end
+
+**Recuperare i film appartenenti ad almento una categoria tra quelle specificate**
+
+Le categorie vengono passate più volte in input e per questo bisogna utilizzare la variabile speciale $_s e $_.
+
+`curl https://localhost:8080/movies?category=action&category=horror`
+
+```sql
+SELECT * FROM MOVIES WHERE CATEGORY IN ( _.use($_s['category']) )
 ```
-
-Per utilizzare una variabile calcolata direttamente dal template Velocity allora conviene utilizzare il 
-seguente metodo.
-
-```
-SELECT * FROM USERS
-WHERE 
-  1 = 1
-  #if($id)
-      AND ID = $_.use($id.toUpperCase())
-  #end
-```
-
-> La property `$_` è una property speciale. Si può utilizare `$_.use($qualsiasiValore)` per evitare l'SQL Injection.
-
