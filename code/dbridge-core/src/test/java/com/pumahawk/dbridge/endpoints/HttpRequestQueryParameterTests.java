@@ -20,8 +20,12 @@ import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.test.web.reactive.server.WebTestClient;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.fasterxml.jackson.databind.JsonNode;
 
 import reactor.core.publisher.Mono;
 
@@ -99,6 +103,15 @@ public class HttpRequestQueryParameterTests {
         assertEquals(HttpMethod.POST, wr().method());
     }
 
+    @Test
+    public void getBody() {
+        client.post().uri("/path")
+        .bodyValue(Collections.singletonMap("message", "hello-world"))
+        .exchange();
+        JsonNode body = (JsonNode) wr().params().get("_b");
+        assertEquals("hello-world", body.get("message").asText());
+    }
+
     private HttpRequestQueryParameter wr() {
         return RequestWrapperController.wrapper;
     }
@@ -108,9 +121,14 @@ public class HttpRequestQueryParameterTests {
 
         public static HttpRequestQueryParameter wrapper;
 
-        @RequestMapping("/**")
+        @GetMapping("/**")
         public Mono<Void> echo(ServerHttpRequest request) {
-            wrapper = new HttpRequestQueryParameter(request);
+            return echo(request, null);
+        }
+
+        @PostMapping("/**")
+        public Mono<Void> echo(ServerHttpRequest request, @RequestBody JsonNode body) {
+            wrapper = new HttpRequestQueryParameter(request, body);
             return Mono.empty();
         }
 

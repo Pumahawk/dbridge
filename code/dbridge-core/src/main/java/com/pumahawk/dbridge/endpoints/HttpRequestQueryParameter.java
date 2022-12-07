@@ -11,6 +11,7 @@ import org.springframework.http.server.RequestPath;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.web.util.UriTemplate;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.pumahawk.dbridge.services.QueryParameter;
 
 public class HttpRequestQueryParameter implements QueryParameter {
@@ -18,9 +19,11 @@ public class HttpRequestQueryParameter implements QueryParameter {
     private UriTemplate contextTemplate = new UriTemplate("{path:.*}");
 
     private final ServerHttpRequest request;
+    private final JsonNode body;
 
-    public HttpRequestQueryParameter(ServerHttpRequest request) {
+    public HttpRequestQueryParameter(ServerHttpRequest request, JsonNode body) {
         this.request = request;
+        this.body = body;
     }
 
     @Override
@@ -35,6 +38,9 @@ public class HttpRequestQueryParameter implements QueryParameter {
         .getQueryParams()
         .toSingleValueMap());
         maps.put("_s", new NotNullListMap<>(request.getQueryParams()));
+        if(body != null) {
+            maps.put("_b", body);
+        }
         return maps;
     }
 
