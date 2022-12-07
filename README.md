@@ -18,6 +18,8 @@
     - [Schema](#schema)
   - [Librerie esterne](#librerie-esterne)
   - [Dettaglio SPEL](#dettaglio-spel)
+  - [Creazione query SQL usando Velocity](#creazione-query-sql-usando-velocity)
+    - [Utilizzare le variabili](#utilizzare-le-variabili)
 
 ## Overview
 
@@ -511,3 +513,44 @@ La property sopra pemette di creare la funzione #isNumber utilizzabile all'inter
 e dello schema.
 
 Per consultare le funzioni aggiunte di default è possibile consultare il file [spel.properties](/code/dbridge-core/src/main/resources/spel.properties)
+
+## Creazione query SQL usando Velocity
+
+Velocity consiste in un template engine e il suo scopo è quello di permettere la creazione di un testo
+senza alcuna limitazione sul modo in cui viene scritta la query. Per questo motivo è importante sapere
+come scrivere una query per evitare di incorrere in errori comuni come il rischio di permettere l'SQL Injection.
+
+Su DBridge Velocity è stato configurato per poter utilizzare delle funzionalità utili alla scrittura di
+codice SQL.
+
+ Per la guida completa è consigliato visitare il sito ufficiale su
+ ["User Guide - Contents"](https://velocity.apache.org/engine/2.3/user-guide.html).
+
+### Utilizzare le variabili
+
+Le variabili della request, come i query parameters, possono essere utilizzati all'interno della query
+sql. 
+
+```
+SELECT * FROM USERS
+WHERE 
+  1 = 1
+  #if($id)
+      AND ID = :id
+  #end
+```
+
+Per utilizzare una variabile calcolata direttamente dal template Velocity allora conviene utilizzare il 
+seguente metodo.
+
+```
+SELECT * FROM USERS
+WHERE 
+  1 = 1
+  #if($id)
+      AND ID = $_.use($id.toUpperCase())
+  #end
+```
+
+> La property `$_` è una property speciale. Si può utilizare `$_.use($qualsiasiValore)` per evitare l'SQL Injection.
+
