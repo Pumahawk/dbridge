@@ -28,6 +28,18 @@ public class UserBlogEndToEndTests extends BlogPostgresEndToEndTests {
     }
 
     @Test
+    public void searchUsers_byName_replaceSpecialCharacter() {
+        String response = getResource("response/users/listEmpty.json");
+        client().get().uri(b -> b
+                .path("/users")
+                .queryParam("name", "ma%r")
+                .build())
+            .exchange()
+            .expectBody()
+            .json(response, false);
+    }
+
+    @Test
     public void searchUsers_byId() {
         String response = getResource("response/users/listById.json");
         client().get().uri(b -> b

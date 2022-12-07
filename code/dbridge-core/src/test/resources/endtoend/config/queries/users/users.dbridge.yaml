@@ -7,6 +7,9 @@ spec:
     sql: "#parse('/users/list.vm')"
   validators:
   - _extends: search
+  - name: replace-name
+    _input: "#p['name']"
+    convert: "#p['name'] = #replaceAll('%', '[%]').apply(#input)"
   schema:
     _input: "{rows:#input}"
     total: "#input['rows'][0]['TOTAL']"
