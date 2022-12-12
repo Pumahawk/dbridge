@@ -6,7 +6,6 @@ import java.util.function.Supplier;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.expression.EvaluationContext;
 import org.springframework.expression.spel.standard.SpelExpressionParser;
-import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.databind.JsonNode;
@@ -71,14 +70,10 @@ public class SchemaManager {
         return sc;
     }
 
-    private Object expression(@Nullable String expression, Object input) {
-        if (expression != null) {
-            EvaluationContext ec = evaluationContext.get();
-            ec.setVariable("input", input);
-            return spelExpressionParser.parseExpression(expression).getValue(ec);
-        } else {
-            return null;
-        }
+    private Object expression(String expression, Object input) {
+        EvaluationContext ec = evaluationContext.get();
+        ec.setVariable("input", input);
+        return spelExpressionParser.parseExpression(expression).getValue(ec);
     }
     
 }
