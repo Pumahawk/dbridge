@@ -7,8 +7,6 @@ import static org.junit.jupiter.params.provider.Arguments.arguments;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Optional;
-import java.util.function.Supplier;
 import java.util.stream.Stream;
 
 import org.junit.jupiter.api.Test;
@@ -17,9 +15,6 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.expression.EvaluationContext;
-import org.springframework.expression.TypedValue;
-import org.springframework.expression.spel.support.StandardEvaluationContext;
 
 import com.fasterxml.jackson.core.exc.StreamReadException;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -27,20 +22,21 @@ import com.fasterxml.jackson.databind.DatabindException;
 import com.fasterxml.jackson.dataformat.yaml.YAMLMapper;
 import com.pumahawk.dbridge.configuration.Validator;
 import com.pumahawk.dbridge.exceptions.BadRequestParameterExpeption;
+import com.pumahawk.dbridge.script.ScriptManager;
+import com.pumahawk.dbridge.script.ScriptManagerFactory;
 
 @SpringBootTest
 public class ValidatorManagerTests {
 
+    @Autowired
+    private ScriptManagerFactory scriptManagerFactory;
 
     @Autowired
     private ValidatorManager validatorManager;
     
-    @Autowired
-    private Supplier<EvaluationContext> evaluationContext;
-
     public static Stream<Arguments> correctValidationAndConvertion() {
         return Stream.of(
-            arguments("notNull", "notNull", "notNull"),
+            arguments("notNull", "notNull", null),
             arguments("editValue", "0", 1),
             arguments("editValueAndValidate", "5", 15)
         );
@@ -49,9 +45,10 @@ public class ValidatorManagerTests {
     @ParameterizedTest
     @MethodSource
     public void correctValidationAndConvertion(String configurationKey, Object intput, Object expected) throws StreamReadException, DatabindException, IOException {
-        EvaluationContext context = createContext(intput);
+        ScriptManager context = createContext(intput);
         validatorManager.validate(getParameterConfig(configurationKey), context);
-        Object input =  Optional.of(context).map(EvaluationContext::getRootObject).map(TypedValue::getValue).map(v -> (Context) v).map(Context::getInput).get();
+        @SuppressWarnings("unchecked")
+        Object input =  ((Map<String, Object>) context.getVariable("ret")).get("input");
         assertEquals(expected, input);
     }
 
@@ -73,7 +70,7 @@ public class ValidatorManagerTests {
 
     @Test
     public void changeParameter() {
-        EvaluationContext context = evaluationContext.get();
+        ScriptManager context = scriptManagerFactory.getScriptManager();
         Map<String, Object> params = new HashMap<>();
         context.setVariable("p", params);
         validatorManager.validate(getParameterConfig("changeParameter"), context);
@@ -89,27 +86,11 @@ public class ValidatorManagerTests {
         }
     }
 
-    private EvaluationContext createContext(Object input) {
-        StandardEvaluationContext cx = (StandardEvaluationContext) evaluationContext.get();
-        cx.setRootObject(new Context(input));
-        return cx;
+    private ScriptManager createContext(Object input) {
+        ScriptManager scriptManager = scriptManagerFactory.getScriptManager();
+        scriptManager.setVariable("input", input);
+        scriptManager.setVariable("ret", new HashMap<>());
+        return scriptManager;
     }
 
-    public class Context {
-        private Object input;
-
-        
-
-        public Context(Object input) {
-            this.input = input;
-        }
-
-        public void setInput(Object input) {
-            this.input = input;
-        }
-
-        public Object getInput() {
-            return input;
-        }
-    }
 }

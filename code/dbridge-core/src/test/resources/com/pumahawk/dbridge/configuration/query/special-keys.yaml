@@ -4,8 +4,8 @@ metadata:
 spec:
 spec:
   path: "/path"
-  query:
-    sql: "sql_value"
+  queries:
+  - sql: "sql_value"
   schema:
     value: "'simple value'"
     fields:

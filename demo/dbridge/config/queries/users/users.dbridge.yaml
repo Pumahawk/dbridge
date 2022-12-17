@@ -3,8 +3,8 @@ metadata:
   name: users
 spec:
   path: "/users"
-  query: 
-    sql: "#parse('/users/list.vm')"
+  queries: 
+  - sql: "#parse('/users/list.vm')"
   validators:
   - _extends: search
   schema:

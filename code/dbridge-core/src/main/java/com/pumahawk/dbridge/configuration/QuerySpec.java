@@ -8,7 +8,7 @@ import org.springframework.http.HttpMethod;
 public class QuerySpec implements Spec {
 
     private String path;
-    private Query query;
+    private List<Query> queries = new LinkedList<>();
     private List<Validator> validators;
     private Schema schema;
     private List<HttpMethod> methods = new LinkedList<>();
@@ -29,12 +29,12 @@ public class QuerySpec implements Spec {
         this.methods = methods;
     }
 
-    public Query getQuery() {
-        return query;
+    public List<Query> getQueries() {
+        return queries;
     }
 
-    public void setQuery(Query query) {
-        this.query = query;
+    public void setQueries(List<Query> queries) {
+        this.queries = queries;
     }
 
     public List<Validator> getValidators() {

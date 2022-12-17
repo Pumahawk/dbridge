@@ -31,7 +31,11 @@ public class QueryResourceTests {
         assertEquals("query-complete", queryResource.getMetadata().getName());
         QuerySpec spec = queryResource.getSpec();
         assertEquals("/users/{id:[0-9]+}", spec.getPath());
-        assertEquals("#parse('/users/byId.vm')", spec.getQuery().getSql());
+        assertEquals("get-user-by-id", spec.getQueries().get(0).getName());
+        assertEquals("input-expression", spec.getQueries().get(0).getInput());
+        assertEquals("#parse('/users/byId.vm')", spec.getQueries().get(0).getSql());
+        assertEquals("conversion-expression", spec.getQueries().get(0).getConversion());
+        assertEquals(true, spec.getQueries().get(0).isUpdate());
         List<HttpMethod> methods = spec.getMethods();
         assertEquals(2, methods.size());
         assertEquals(HttpMethod.GET, methods.get(0));
@@ -83,7 +87,7 @@ public class QueryResourceTests {
         QueryResource queryResource = yamlMapper.readValue(getConfigFile("special-keys.yaml"), QueryResource.class);
         QuerySpec spec = queryResource.getSpec();
         assertEquals("/path", spec.getPath());
-        assertEquals("sql_value", spec.getQuery().getSql());
+        assertEquals("sql_value", spec.getQueries().get(0).getSql());
         Schema sc = spec.getSchema();
         assertEquals(2, sc.getFields().size());
 

@@ -30,4 +30,11 @@ INSERT INTO "USERS" ("ID", "NAME") VALUES
 (1,	'Marco'),
 (2,	'Enrico');
 
+DROP TABLE IF EXISTS "BUCKET";
+CREATE TABLE "public"."BUCKET" (
+    "ID" character varying NOT NULL,
+    "VALUE" character varying NOT NULL,
+    CONSTRAINT "BUCKET_pkey" PRIMARY KEY ("ID")
+) WITH (oids = false);
+
 -- 2022-11-18 11:43:19.559226+00

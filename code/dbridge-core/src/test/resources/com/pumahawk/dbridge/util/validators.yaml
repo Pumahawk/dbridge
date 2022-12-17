@@ -1,6 +1,6 @@
 notNull:
   validator:
-    spel: "input ne null"
+    spel: "#input ne null"
     message: "Value is null"
 
 validatorNull:
@@ -9,21 +9,21 @@ validatorNull:
     message: "Validator is null"
 
 editValue:
-  _input: "T(java.lang.Integer).parseInt(input)"
-  convert: "input = #input + 1"
+  _input: "T(java.lang.Integer).parseInt(#input)"
+  convert: "#ret['input'] = #input + 1"
 
 editValueAndValidate:
-  _input: "T(java.lang.Integer).parseInt(input) + 5"
-  convert: "input = #input + 5"
+  _input: "T(java.lang.Integer).parseInt(#input) + 5"
+  convert: "#ret['input'] = #input + 5"
   validator:
     spel: "#input eq 10"
     message: "Value is not equal 10. Value: #{#input}"
 
 validationWithEceptionMessage:
-  _input: "T(java.lang.Integer).parseInt(input) + 5"
-  convert: "input = #input + 5"
+  _input: "T(java.lang.Integer).parseInt(#input) + 5"
+  convert: "#ret['input'] = #input + 5"
   validator:
-    spel: "input eq 10"
+    spel: "#input eq 10" 
     message: "Value is not equal 10. Value: #{input + sdada asdads sdfsfd}"
 
 changeParameter:

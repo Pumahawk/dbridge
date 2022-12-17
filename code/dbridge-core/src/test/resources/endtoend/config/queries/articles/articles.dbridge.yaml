@@ -3,8 +3,8 @@ metadata:
   name: articles
 spec:
   path: "/articles"
-  query:
-    sql: "#parse('/articles/list.vm')"
+  queries:
+  - sql: "#parse('/articles/list.vm')"
   validators:
   - _extends: search
   schema:

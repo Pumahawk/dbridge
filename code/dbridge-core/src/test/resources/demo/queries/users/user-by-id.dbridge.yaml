@@ -3,8 +3,8 @@ metadata:
   name: user-by-id
 spec:
   path: "/users/{id:[0-9]+}"
-  query:
-    sql: "#parse('/users/byId.vm')"
+  queries:
+  - sql: "#parse('/users/byId.vm')"
   validators:
   - _extends: byId
   schema:

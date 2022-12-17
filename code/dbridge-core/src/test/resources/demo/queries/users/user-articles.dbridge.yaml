@@ -3,8 +3,8 @@ metadata:
   name: user-articles
 spec:
   path: "/users/{id:[0-9]+}/articles"
-  query:
-    sql: "#parse('/users/userArticles.vm')"
+  queries:
+  - sql: "#parse('/users/userArticles.vm')"
   validators:
   - _extends: search
   schema:

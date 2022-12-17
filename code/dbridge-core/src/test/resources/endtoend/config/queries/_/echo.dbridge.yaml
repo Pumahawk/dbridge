@@ -3,8 +3,8 @@ metadata:
   name: special-echo
 spec:
   path: "/_/echo"
-  query:
-    sql: "SELECT #if($message):message#{else}'Hello, World! I''m postgres.' #end as message"
+  queries:
+  - sql: "SELECT #if($message):message#{else}'Hello, World! I''m postgres.' #end as message"
   validators: []
   schema:
     _input: "#input[0]"

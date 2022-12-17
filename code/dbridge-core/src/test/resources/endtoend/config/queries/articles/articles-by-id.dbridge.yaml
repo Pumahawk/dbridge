@@ -3,8 +3,8 @@ metadata:
   name: articles-by-id
 spec:
   path: "/articles/{id:[0-9]+}"
-  query:
-    sql: "#parse('/articles/byId.vm')"
+  queries:
+  - sql: "#parse('/articles/byId.vm')"
   validators:
   - _extends: byId
   schema:

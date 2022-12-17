@@ -68,8 +68,8 @@ metadata:
   name: articles
 spec:
   path: "/articles"
-  query:
-    sql: "#parse('/articles/list.vm')"
+  queries:
+  - sql: "#parse('/articles/list.vm')"
   validators:
   - _extends: search
   schema:
@@ -298,20 +298,26 @@ Inoltre permette di definire dei validatori per la request e uno schema per la r
   - */users* 
   - */users/{id}* 
   - */users/{id:[0-9]+}* 
-- **query.sql**: Inserimento di una query SQL che verrà processata dal template engine *Velocity*.
+- **queries.name**: Nome della query utilizzabile all'interno delle espressioni *SPEL* e *Velocity*.
+- **queries._input**: Funzione *SPEL* da utilizzare per creare la variabile *input* all'interno di *Velocity*.
+- **queries.conversion**: Funzione per modificare il valore della variabile *result* dopo la query.
+- **queries.sql**: Inserimento di una query SQL che verrà processata dal template engine *Velocity*.
   E' possibile inserire direttamente una query nel file di configurazione oppure in un file esterno per
   migliorare l'organizzazione delle proprie query SQL.  
   Es:
 ```yaml
-query:
+queries:
+- name: name-query
+  _input: spel-expression
+  conversion: spel-result-expression
   sql: |
     SELECT *
     FROM USERS
     WHERE id = :id
 ```
 ```yaml
-query:
-  sql: "#parse('/users-by-id.vm')"
+queries:
+- sql: "#parse('/users-by-id.vm')"
 ```
 
 - **query.database**: Nome del database scelto in fase di configurazione. Se non specificato viene utilizzata la configurazione di default.
@@ -321,8 +327,8 @@ query:
 ```yaml
 spec:
   path: "/users/{id:[0-9]+}"
-  query:
-    database: "database-connection-name" # optional
+  queries:
+  - database: "database-connection-name" # optional
     sql: "#parse('/users/byId.vm')"
   validators:
   - _extends: byId

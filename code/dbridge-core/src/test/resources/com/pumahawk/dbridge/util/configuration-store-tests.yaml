@@ -36,8 +36,8 @@ queries:
     name: qe1
   spec:
     path: "/path"
-    query:
-      sql: "sql_value"
+    queries:
+    - sql: "sql_value"
     validators:
     - _extends: byId
       name: basicExtension
@@ -47,8 +47,8 @@ queries:
     name: qe2
   spec:
     path: "/path"
-    query:
-      sql: "sql_value"
+    queries:
+    - sql: "sql_value"
     validators:
     - _extends: ext2
       name: multipleExtension
@@ -59,8 +59,8 @@ queries:
     name: qe3
   spec:
     path: "/path"
-    query:
-      sql: "sql_value"
+    queries:
+    - sql: "sql_value"
     validators:
     - _extends: ext2
       name: multipleExtension
@@ -71,8 +71,8 @@ queries:
     name: qe4
   spec:
     path: "/path"
-    query:
-      sql: "sql_value"
+    queries:
+    - sql: "sql_value"
     validators:
     - _extends: ext2
       name: multipleExtension

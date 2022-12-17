@@ -4,7 +4,6 @@ import static org.junit.jupiter.params.provider.Arguments.arguments;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
-import java.util.function.Supplier;
 import java.util.stream.Stream;
 
 import org.junit.jupiter.api.Test;
@@ -16,14 +15,13 @@ import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.expression.EvaluationContext;
-import org.springframework.expression.spel.standard.SpelExpressionParser;
 import org.springframework.http.HttpStatus;
 import org.springframework.test.web.reactive.server.WebTestClient;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pumahawk.dbridge.exceptions.NotFoundRoute;
 import com.pumahawk.dbridge.exceptions.ProjectException;
+import com.pumahawk.dbridge.script.ScriptManagerFactory;
 import com.pumahawk.dbridge.services.QueryParameter;
 import com.pumahawk.dbridge.services.QueryService;
 import com.pumahawk.dbridge.services.SimpleQueryResult;
@@ -40,10 +38,7 @@ public class QueryControllerTests {
     private WebTestClient client;
 
     @Autowired
-    private SpelExpressionParser spelExpressionParser;
-
-    @Autowired
-    private Supplier<EvaluationContext> evaliationContext;
+    private ScriptManagerFactory scriptManagerFactory;
 
     @Test
     public void streamTest() {
@@ -77,7 +72,7 @@ public class QueryControllerTests {
     public void notFoundFromSpel() {
         Exception ex = null;
         try {
-            spelExpressionParser.parseExpression("#found(null, 'not foud spel')").getValue(evaliationContext.get());
+            scriptManagerFactory.getScriptManager().evaluate("#found(null, 'not foud spel')");
         } catch(Exception e) {
             ex = e;
         }

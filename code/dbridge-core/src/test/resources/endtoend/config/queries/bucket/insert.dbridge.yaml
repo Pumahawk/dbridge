@@ -1,0 +1,26 @@
+kind: query
+metadata:
+  name: insertbucket-insert
+spec:
+  path: /bucket
+  methods:
+  - POST
+  validators:
+  - name: validIdBody
+    _input: "#p['_b'].get('id')?.asText()"
+    convert: "#p['id'] = #input"
+    validator:
+      spel: "#input != null"
+      message: "Invalid id. Value: #{#input}"
+  - name: validText
+    _input: "#p['_b'].get('message')?.asText()"
+    convert: "#p['message'] = #input"
+    validator:
+      spel: "#input != null"
+      message: "Invalid message. Value: #{#input}"
+  queries:
+  - sql: |
+      INSERT INTO "BUCKET" VALUES(:id, :message)
+    update: true
+  schema:
+    message: "'success'"

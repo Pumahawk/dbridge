@@ -7,8 +7,12 @@ spec:
   methods:
   - GET
   - POST
-  query:
+  queries:
+  - name: get-user-by-id
+    _input: "input-expression"
     sql: "#parse('/users/byId.vm')"
+    conversion: "conversion-expression"
+    update: true
   validators:
   - _extends: byId
   schema:

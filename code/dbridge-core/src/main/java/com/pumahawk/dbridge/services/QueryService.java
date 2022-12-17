@@ -3,10 +3,8 @@ package com.pumahawk.dbridge.services;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.function.Supplier;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.expression.EvaluationContext;
 import org.springframework.stereotype.Component;
 import org.springframework.web.util.UriTemplate;
 
@@ -16,6 +14,8 @@ import com.pumahawk.dbridge.configuration.QuerySpec;
 import com.pumahawk.dbridge.configuration.Schema;
 import com.pumahawk.dbridge.configuration.Validator;
 import com.pumahawk.dbridge.exceptions.NotFoundRoute;
+import com.pumahawk.dbridge.script.ScriptManager;
+import com.pumahawk.dbridge.script.ScriptManagerFactory;
 import com.pumahawk.dbridge.util.ConfigurationLoader;
 import com.pumahawk.dbridge.util.SchemaManager;
 import com.pumahawk.dbridge.util.ValidatorManager;
@@ -33,10 +33,10 @@ public class QueryService {
     private SqlQueryExecutor sqlQueryExecutor;
 
     @Autowired
-    private Supplier<EvaluationContext> evaluationContext;
+    private SchemaManager schemaManager;
 
     @Autowired
-    private SchemaManager schemaManager;
+    private ScriptManagerFactory scriptManagerFactory;
 
     public QueryResult query(QueryParameter parameters) {
 
@@ -60,7 +60,7 @@ public class QueryService {
     }
 
     private QueryResult query(QuerySpec spec, Map<String, Object> params) {
-        List<Map<String, Object>> result = sqlQueryExecutor.query(spec, params);
+        Object result = sqlQueryExecutor.query(spec, params).get("result");
         JsonNode data = extractDataFromResult(spec.getSchema(), result);
         return generateResult(spec, params, data);
     }
@@ -71,19 +71,19 @@ public class QueryService {
         return sqr;
     }
 
-    private JsonNode extractDataFromResult(Schema schema, List<Map<String, Object>> result) {
+    private JsonNode extractDataFromResult(Schema schema, Object result) {
         return schemaManager.process(schema, result);
     }
 
     private void validateAndConvertParams(List<Validator> validators, Map<String, Object> params) {
-        EvaluationContext context = createContext(params);
+        ScriptManager context = createContext(params);
         validators.forEach(v -> {
             validatorManager.validate(v, context);
         });
     }
 
-    private EvaluationContext createContext(Map<String, Object> params) {
-        EvaluationContext context = evaluationContext.get();
+    private ScriptManager createContext(Map<String, Object> params) {
+        ScriptManager context = scriptManagerFactory.getScriptManager();
         context.setVariable("p", params);
         return context;
     }

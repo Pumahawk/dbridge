@@ -1,11 +1,8 @@
 package com.pumahawk.dbridge.util;
 
 import java.util.Map;
-import java.util.function.Supplier;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.expression.EvaluationContext;
-import org.springframework.expression.spel.standard.SpelExpressionParser;
 import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.databind.JsonNode;
@@ -13,6 +10,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.pumahawk.dbridge.configuration.Schema;
+import com.pumahawk.dbridge.script.ScriptManager;
+import com.pumahawk.dbridge.script.ScriptManagerFactory;
 
 @Component
 public class SchemaManager {
@@ -21,10 +20,7 @@ public class SchemaManager {
     private ObjectMapper objectMapper;
 
     @Autowired
-    private SpelExpressionParser spelExpressionParser;
-
-    @Autowired
-    private Supplier<EvaluationContext> evaluationContext;
+    private ScriptManagerFactory scriptManagerFactory;
 
     public JsonNode process(Schema inputSchema, final Object input) {
         Schema schema = cloneSchema(inputSchema);
@@ -71,9 +67,9 @@ public class SchemaManager {
     }
 
     private Object expression(String expression, Object input) {
-        EvaluationContext ec = evaluationContext.get();
-        ec.setVariable("input", input);
-        return spelExpressionParser.parseExpression(expression).getValue(ec);
+        ScriptManager scriptManager = scriptManagerFactory.getScriptManager();
+        scriptManager.setVariable("input", input);
+        return scriptManager.evaluate(expression);
     }
     
 }

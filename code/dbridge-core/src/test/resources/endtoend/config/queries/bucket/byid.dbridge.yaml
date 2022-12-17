@@ -1,0 +1,20 @@
+kind: query
+metadata:
+  name: insertbucket-byid
+spec:
+  path: /bucket/{id}
+  methods:
+  - GET
+  validators:
+  - name: validId
+    _input: "#p['id']"
+    validator:
+      spel: "#input != null"
+      message: "Invalid id. Value: #{#input}"
+  queries:
+  - sql: |
+      SELECT * FROM "BUCKET" WHERE "ID" = :id
+  schema:
+    _input: "#foundFirst(#input, 'User not fond')"
+    id: "#input['ID']"
+    message: "#input['MESSAGE']"

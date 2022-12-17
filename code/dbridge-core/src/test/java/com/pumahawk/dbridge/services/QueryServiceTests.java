@@ -18,7 +18,6 @@ import org.mockito.stubbing.Stubber;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.expression.EvaluationContext;
 import org.springframework.http.HttpMethod;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -27,6 +26,7 @@ import com.pumahawk.dbridge.configuration.QuerySpec;
 import com.pumahawk.dbridge.configuration.Schema;
 import com.pumahawk.dbridge.configuration.Validator;
 import com.pumahawk.dbridge.exceptions.NotFoundRoute;
+import com.pumahawk.dbridge.script.ScriptManager;
 import com.pumahawk.dbridge.util.ConfigurationLoader;
 import com.pumahawk.dbridge.util.ConfigurationStore;
 import com.pumahawk.dbridge.util.DatabaseConnector;
@@ -84,7 +84,7 @@ public class QueryServiceTests {
         List<Map<String, String>> result = Collections.singletonList(Collections.singletonMap("MESSAGE", "Hello, World!"));
         when(sqlQueryExecutor.query(any(), any())).then( i-> {
             sqlExecutorQueryArguments.add(i.getArguments());
-            return result;
+            return Collections.singletonMap("result", result);
         });
 
         List<Object[]> schemaManagerProcessArguments = new LinkedList<>();
@@ -98,8 +98,8 @@ public class QueryServiceTests {
         assertEquals(1, validatorManagerValidateArguments.size());
         Validator vl = (Validator) validatorManagerValidateArguments.get(0)[0];
         assertEquals(val, vl);
-        EvaluationContext cx = (EvaluationContext) validatorManagerValidateArguments.get(0)[1];
-        Map<String, Object> pr = (Map<String, Object>) cx.lookupVariable("p");
+        ScriptManager cx = (ScriptManager) validatorManagerValidateArguments.get(0)[1];
+        Map<String, Object> pr = (Map<String, Object>) cx.getVariable("p");
         if (pr != null) {
             assertEquals(1, pr.get("limit"));
             assertEquals("442345", pr.get("id"));
