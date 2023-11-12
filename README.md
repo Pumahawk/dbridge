@@ -18,6 +18,7 @@
     - [Schema](#schema)
   - [Librerie esterne](#librerie-esterne)
   - [Dettaglio SPEL](#dettaglio-spel)
+    - [Utilizzo Bean in SPELL](#utilizzo-bean-in-spell)
   - [Creazione query SQL usando Velocity](#creazione-query-sql-usando-velocity)
     - [Funzionamento elaborazione query](#funzionamento-elaborazione-query)
     - [Velocity variabile di supporto **$\_**](#velocity-variabile-di-supporto-_)
@@ -521,6 +522,14 @@ La property sopra pemette di creare la funzione #isNumber utilizzabile all'inter
 e dello schema.
 
 Per consultare le funzioni aggiunte di default è possibile consultare il file [spel.properties](/code/dbridge-core/src/main/resources/spel.properties)
+
+### Utilizzo Bean in SPELL
+
+E' possibile accedere ai Bean di Spring direttamente dal codice Spel.
+
+```
+{message: 'Text: ' + @beanName.getText()}
+```
 
 ## Creazione query SQL usando Velocity
 
