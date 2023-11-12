@@ -21,6 +21,7 @@
   - [Creazione query SQL usando Velocity](#creazione-query-sql-usando-velocity)
     - [Funzionamento elaborazione query](#funzionamento-elaborazione-query)
     - [Velocity variabile di supporto **$\_**](#velocity-variabile-di-supporto-_)
+    - [Velocity configurazione](#velocity-configurazione)
 
 ## Overview
 
@@ -578,3 +579,16 @@ Questa variabile può essere utilizzata per semplificare operazioni che altrimen
 complesse da riprodurre manualmente su Velocity.
 
 - ```$_.use( parameter )``` - Permette l'inserimento di un oggetto Java all'interno della query evitando l'sql Injection.
+
+### Velocity configurazione
+
+E' possibile configurare velocity direttamente tramite il file di **application.properties**.
+
+Per modificare le properties indicate in [documentazione](https://velocity.apache.org/engine/2.0/configuration.html) basta 
+aggiungerle nel file di application properties con il prefisso **velocity.**.
+
+**ES: modifica varibile [set null allowed](https://velocity.apache.org/engine/2.0/configuration.html#set-directive)**
+
+```txt
+velocity.directive.set.null.allowed=true
+```
