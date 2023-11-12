@@ -566,5 +566,5 @@ Le categorie vengono passate più volte in input e per questo bisogna utilizzare
 `curl https://localhost:8080/movies?category=action&category=horror`
 
 ```sql
-SELECT * FROM MOVIES WHERE CATEGORY IN ( _.use($_s['category']) )
+SELECT * FROM MOVIES WHERE CATEGORY IN ( $_.use($_s['category']) )
 ```
