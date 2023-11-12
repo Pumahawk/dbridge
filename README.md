@@ -20,6 +20,7 @@
   - [Dettaglio SPEL](#dettaglio-spel)
   - [Creazione query SQL usando Velocity](#creazione-query-sql-usando-velocity)
     - [Funzionamento elaborazione query](#funzionamento-elaborazione-query)
+    - [Velocity variabile di supporto **$\_**](#velocity-variabile-di-supporto-_)
 
 ## Overview
 
@@ -568,3 +569,12 @@ Le categorie vengono passate più volte in input e per questo bisogna utilizzare
 ```sql
 SELECT * FROM MOVIES WHERE CATEGORY IN ( $_.use($_s['category']) )
 ```
+
+### Velocity variabile di supporto **$_**
+
+All'interno del codice di Velocity è possibile utilizzare la variabile di supporto **$_**.
+
+Questa variabile può essere utilizzata per semplificare operazioni che altrimenti sarebbero molto
+complesse da riprodurre manualmente su Velocity.
+
+- ```$_.use( parameter )``` - Permette l'inserimento di un oggetto Java all'interno della query evitando l'sql Injection.
