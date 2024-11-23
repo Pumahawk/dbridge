@@ -4,8 +4,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
-import javax.annotation.PostConstruct;
-import javax.annotation.PreDestroy;
 import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +13,9 @@ import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 
 import com.zaxxer.hikari.HikariDataSource;
+
+import jakarta.annotation.PostConstruct;
+import jakarta.annotation.PreDestroy;
 
 @Component
 public class SimpleDatabaseConnector implements DatabaseConnector {

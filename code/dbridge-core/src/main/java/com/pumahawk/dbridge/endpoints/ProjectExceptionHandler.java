@@ -28,7 +28,7 @@ public class ProjectExceptionHandler {
   public ResponseEntity<ErrorResponse> handleAccessDeniedException(
     ProjectException ex) {
       ErrorResponse response = new ErrorResponse(ex.getResponseMessage());
-      return new ResponseEntity<ErrorResponse>(response, new HttpHeaders(), ex.getStatus());
+      return new ResponseEntity<ErrorResponse>(response, new HttpHeaders(), ex.getStatusCode());
   }
     
 }

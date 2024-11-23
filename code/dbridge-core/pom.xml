@@ -5,17 +5,21 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>2.7.4</version>
+		<version>3.4.0</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.pumahawk.dbridge</groupId>
 	<artifactId>dbridge-core</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>dbridge-core</name>
-	<description>Demo project for Spring Boot</description>
+	<description>DBridge</description>
 	<properties>
-		<java.version>1.8</java.version>
-		<spring-boot.repackage.layout>DIR</spring-boot.repackage.layout>
+		<java.version>21</java.version>
+		<hikaricp.version>3.4.5</hikaricp.version>
+		<commons-io.version>2.11.0</commons-io.version>
+		<h2.version>2.1.214</h2.version>
+		<jsonassert.version>1.5.0</jsonassert.version>
+		<postgresql.version>42.5.1</postgresql.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -38,12 +42,12 @@
 		<dependency>
 			<groupId>com.zaxxer</groupId>
 			<artifactId>HikariCP</artifactId>
-			<version>3.4.5</version>
+			<version>${hikaricp.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>commons-io</groupId>
 			<artifactId>commons-io</artifactId>
-			<version>2.11.0</version>
+			<version>${commons-io.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -53,19 +57,19 @@
 		<dependency>
 			<groupId>com.h2database</groupId>
 			<artifactId>h2</artifactId>
-			<version>2.1.214</version>
+			<version>${h2.version}</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.skyscreamer</groupId>
 			<artifactId>jsonassert</artifactId>
-			<version>1.5.0</version>
+			<version>${jsonassert.version}</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.postgresql</groupId>
 			<artifactId>postgresql</artifactId>
-			<version>42.5.1</version>
+			<version>${postgresql.version}</version>
 			<scope>test</scope>
 		</dependency>
 

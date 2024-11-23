@@ -73,7 +73,7 @@ public class SpelConfigurationTests {
     public void throwError() {
         Exception e = assertThrows(Exception.class, () -> spelExpressionParser.parseExpression("#found(null, 'not found test parameter')").getValue(context()));
         ResponseStatusException ex = ExceptionUtils.throwableOfType(e, ResponseStatusException.class);
-        assertEquals(HttpStatus.NOT_FOUND, ex.getStatus());
+        assertEquals(HttpStatus.NOT_FOUND, ex.getStatusCode());
         assertEquals("not found test parameter", ex.getReason());
         
     }

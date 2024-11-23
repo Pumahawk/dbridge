@@ -71,7 +71,7 @@ public class SpelManagerFactoryTests {
     public void throwError() {
         Exception e = assertThrows(Exception.class, () -> spelManagerFactory.getScriptManager().evaluate("#found(null, 'not found test parameter')"));
         ResponseStatusException ex = ExceptionUtils.throwableOfType(e, ResponseStatusException.class);
-        assertEquals(HttpStatus.NOT_FOUND, ex.getStatus());
+        assertEquals(HttpStatus.NOT_FOUND, ex.getStatusCode());
         assertEquals("not found test parameter", ex.getReason());
         
     }
