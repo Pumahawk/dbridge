@@ -1,4 +1,3 @@
 package com.pumahawk.dbridge.endpoints;
 
-public class BasicResponse {
-}
+public class BasicResponse {}

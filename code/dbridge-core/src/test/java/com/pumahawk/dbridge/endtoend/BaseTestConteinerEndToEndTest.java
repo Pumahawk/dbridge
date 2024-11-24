@@ -12,29 +12,29 @@ import org.testcontainers.containers.PostgreSQLContainer;
 @DirtiesContext
 public class BaseTestConteinerEndToEndTest {
 
-    private static Logger logger = LoggerFactory.getLogger(BaseTestConteinerEndToEndTest.class);
+  private static Logger logger = LoggerFactory.getLogger(BaseTestConteinerEndToEndTest.class);
 
-    static PostgreSQLContainer<?> postgres =
-            new PostgreSQLContainer<>("postgres:16-alpine")
-	    	.withInitScript("endtoend/data.sql")
-	        .withDatabaseName("blog");
+  static PostgreSQLContainer<?> postgres =
+      new PostgreSQLContainer<>("postgres:16-alpine")
+          .withInitScript("endtoend/data.sql")
+          .withDatabaseName("blog");
 
-    @BeforeAll
-    static void beforeAll() {
-        postgres.start();
-    }
+  @BeforeAll
+  static void beforeAll() {
+    postgres.start();
+  }
 
-    @AfterAll
-    static void afterAll() {
-        postgres.stop();
-    }
+  @AfterAll
+  static void afterAll() {
+    postgres.stop();
+  }
 
-    @DynamicPropertySource
-    static void configureProperties(DynamicPropertyRegistry registry) {
-	logger.info("Configuration test container");
-        registry.add("db.configuration.postgres.jdbcUrl", postgres::getJdbcUrl);
-        registry.add("db.configuration.postgres.username", postgres::getUsername);
-        registry.add("db.configuration.postgres.password", postgres::getPassword);
-        registry.add("db.configuration.postgres.driverClassName", postgres::getDriverClassName);
-    }
+  @DynamicPropertySource
+  static void configureProperties(DynamicPropertyRegistry registry) {
+    logger.info("Configuration test container");
+    registry.add("db.configuration.postgres.jdbcUrl", postgres::getJdbcUrl);
+    registry.add("db.configuration.postgres.username", postgres::getUsername);
+    registry.add("db.configuration.postgres.password", postgres::getPassword);
+    registry.add("db.configuration.postgres.driverClassName", postgres::getDriverClassName);
+  }
 }

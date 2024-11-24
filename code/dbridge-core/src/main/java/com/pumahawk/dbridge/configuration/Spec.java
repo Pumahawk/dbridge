@@ -1,4 +1,3 @@
 package com.pumahawk.dbridge.configuration;
 
-public interface Spec {
-}
+public interface Spec {}

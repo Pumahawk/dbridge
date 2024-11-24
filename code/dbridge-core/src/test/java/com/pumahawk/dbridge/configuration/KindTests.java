@@ -8,17 +8,18 @@ import org.junit.jupiter.api.Test;
 
 public class KindTests {
 
-    @Test
-    public void convertAll() {
-        for (Kind kind : Kind.values()) {
-            assertEquals(kind, Kind.fromName(kind.getName()));
-        }
+  @Test
+  public void convertAll() {
+    for (Kind kind : Kind.values()) {
+      assertEquals(kind, Kind.fromName(kind.getName()));
     }
+  }
 
-    @Test
-    public void notFound() {
-        String name = "not-found";
-        IllegalArgumentException e = assertThrows(IllegalArgumentException.class, () ->  Kind.fromName(name));
-        assertTrue(e.getMessage().contains(name));
-    }
+  @Test
+  public void notFound() {
+    String name = "not-found";
+    IllegalArgumentException e =
+        assertThrows(IllegalArgumentException.class, () -> Kind.fromName(name));
+    assertTrue(e.getMessage().contains(name));
+  }
 }

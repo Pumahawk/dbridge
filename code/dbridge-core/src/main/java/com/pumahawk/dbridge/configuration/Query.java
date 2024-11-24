@@ -4,61 +4,63 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class Query {
 
-    private String name;
-    private String database;
-    private String sql;
-    @JsonProperty("_input")
-    private String _input;
-    private String conversion;
-    private boolean update = false;
+  private String name;
+  private String database;
+  private String sql;
 
-    public String getName() {
-        return name;
-    }
+  @JsonProperty("_input")
+  private String _input;
 
-    public void setName(String name) {
-        this.name = name;
-    }
+  private String conversion;
+  private boolean update = false;
 
-    public String getDatabase() {
-        return database;
-    }
+  public String getName() {
+    return name;
+  }
 
-    public void setDatabase(String database) {
-        this.database = database;
-    }
+  public void setName(String name) {
+    this.name = name;
+  }
 
-    public void setSql(String sql) {
-        this.sql = sql;
-    }
+  public String getDatabase() {
+    return database;
+  }
 
-    public String getSql() {
-        return sql;
-    }
+  public void setDatabase(String database) {
+    this.database = database;
+  }
 
-    public String getConversion() {
-        return conversion;
-    }
+  public void setSql(String sql) {
+    this.sql = sql;
+  }
 
-    public void setConversion(String conversion) {
-        this.conversion = conversion;
-    }
+  public String getSql() {
+    return sql;
+  }
 
-    @JsonProperty("_input")
-    public String getInput() {
-        return _input;
-    }
+  public String getConversion() {
+    return conversion;
+  }
 
-    @JsonProperty("_input")
-    public void setInput(String _input) {
-        this._input = _input;
-    }
+  public void setConversion(String conversion) {
+    this.conversion = conversion;
+  }
 
-    public void setUpdate(boolean update) {
-        this.update = update;
-    }
+  @JsonProperty("_input")
+  public String getInput() {
+    return _input;
+  }
 
-    public boolean isUpdate() {
-        return update;
-    }
+  @JsonProperty("_input")
+  public void setInput(String _input) {
+    this._input = _input;
+  }
+
+  public void setUpdate(boolean update) {
+    this.update = update;
+  }
+
+  public boolean isUpdate() {
+    return update;
+  }
 }

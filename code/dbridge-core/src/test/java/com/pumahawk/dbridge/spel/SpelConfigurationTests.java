@@ -9,7 +9,6 @@ import static org.junit.jupiter.params.provider.Arguments.arguments;
 import java.util.Collections;
 import java.util.function.Supplier;
 import java.util.stream.Stream;
-
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -25,60 +24,74 @@ import org.springframework.web.server.ResponseStatusException;
 @SpringBootTest
 public class SpelConfigurationTests {
 
-    @Autowired
-    private SpelExpressionParser spelExpressionParser;
+  @Autowired private SpelExpressionParser spelExpressionParser;
 
-    @Autowired
-    private Supplier<EvaluationContext> evaliationContext;
+  @Autowired private Supplier<EvaluationContext> evaliationContext;
 
-    @Test
-    public void callCustomFunction() {
-        Boolean value = spelExpressionParser.parseExpression("#isEmpty('')").getValue(context(), Boolean.class);
-        assertNotNull(value);
-        assertTrue(value.booleanValue());
-    }
+  @Test
+  public void callCustomFunction() {
+    Boolean value =
+        spelExpressionParser.parseExpression("#isEmpty('')").getValue(context(), Boolean.class);
+    assertNotNull(value);
+    assertTrue(value.booleanValue());
+  }
 
-    public static Stream<Arguments> functionsConfiguration() {
-        return Stream.of(
-            arguments("#isNumber(#this)", "1", true),
-            arguments("#isEmpty(#this)", "", true),
-            arguments("#trim(#this)", "   the message   ", "the message"),
-            arguments("#toNumber(#this)", "1", 1),
-            arguments("#is(#this).equalTo(1)", 1, true),
-            arguments("#fgt(2).and(#flt(8)).test(#this)", 5, true),
-            arguments("#this gt 2 and #this lt 8", 5, true),
-            arguments("#group({{id:1, name:'a'},{id:1,name:'B'}}, 'id')[0].nested[1]['name']", null, "B"),
-            arguments("#found(#this, 'check not found')", "exist", "exist"),
-            arguments("#foundFirst(#this, 'check not found')", Collections.singleton("exist"), "exist"),
-            arguments("#this.stream().map(#fun(#toNumber)).collect(#toList()).get(0)", Collections.singleton("1"), 1),
-            arguments("#this.filter(#pred(#isNumber)).map(#fun(#toNumber)).collect(#toList()).get(0)", Stream.of("a","10","b"), 10)
-        );
-    }
-    
-    @ParameterizedTest
-    @MethodSource
-    public void functionsConfiguration(String expression, Object input, Object expected) {;
-        Object out = spelExpressionParser.parseExpression(expression).getValue(context(), input);
-        assertEquals(expected, out);
-    }
+  public static Stream<Arguments> functionsConfiguration() {
+    return Stream.of(
+        arguments("#isNumber(#this)", "1", true),
+        arguments("#isEmpty(#this)", "", true),
+        arguments("#trim(#this)", "   the message   ", "the message"),
+        arguments("#toNumber(#this)", "1", 1),
+        arguments("#is(#this).equalTo(1)", 1, true),
+        arguments("#fgt(2).and(#flt(8)).test(#this)", 5, true),
+        arguments("#this gt 2 and #this lt 8", 5, true),
+        arguments(
+            "#group({{id:1, name:'a'},{id:1,name:'B'}}, 'id')[0].nested[1]['name']", null, "B"),
+        arguments("#found(#this, 'check not found')", "exist", "exist"),
+        arguments("#foundFirst(#this, 'check not found')", Collections.singleton("exist"), "exist"),
+        arguments(
+            "#this.stream().map(#fun(#toNumber)).collect(#toList()).get(0)",
+            Collections.singleton("1"),
+            1),
+        arguments(
+            "#this.filter(#pred(#isNumber)).map(#fun(#toNumber)).collect(#toList()).get(0)",
+            Stream.of("a", "10", "b"),
+            10));
+  }
 
-    @Test
-    public void callCustomBean() {
-        String value = spelExpressionParser.parseExpression("@spelTestBean.setPrefix('Hello, ', 'World')").getValue(context(), String.class);
-        assertNotNull(value);
-        assertEquals("Hello, World", value);
-    }
+  @ParameterizedTest
+  @MethodSource
+  public void functionsConfiguration(String expression, Object input, Object expected) {
+    ;
+    Object out = spelExpressionParser.parseExpression(expression).getValue(context(), input);
+    assertEquals(expected, out);
+  }
 
-    @Test
-    public void throwError() {
-        Exception e = assertThrows(Exception.class, () -> spelExpressionParser.parseExpression("#found(null, 'not found test parameter')").getValue(context()));
-        ResponseStatusException ex = ExceptionUtils.throwableOfType(e, ResponseStatusException.class);
-        assertEquals(HttpStatus.NOT_FOUND, ex.getStatusCode());
-        assertEquals("not found test parameter", ex.getReason());
-        
-    }
+  @Test
+  public void callCustomBean() {
+    String value =
+        spelExpressionParser
+            .parseExpression("@spelTestBean.setPrefix('Hello, ', 'World')")
+            .getValue(context(), String.class);
+    assertNotNull(value);
+    assertEquals("Hello, World", value);
+  }
 
-    private EvaluationContext context() {
-        return evaliationContext.get();
-    }
+  @Test
+  public void throwError() {
+    Exception e =
+        assertThrows(
+            Exception.class,
+            () ->
+                spelExpressionParser
+                    .parseExpression("#found(null, 'not found test parameter')")
+                    .getValue(context()));
+    ResponseStatusException ex = ExceptionUtils.throwableOfType(e, ResponseStatusException.class);
+    assertEquals(HttpStatus.NOT_FOUND, ex.getStatusCode());
+    assertEquals("not found test parameter", ex.getReason());
+  }
+
+  private EvaluationContext context() {
+    return evaliationContext.get();
+  }
 }

@@ -9,33 +9,32 @@ import java.util.stream.Collectors;
 
 public class StreamSpelUtils {
 
-    public static Function<Object, Object> fun(Method method) {
-        return v -> {
-            return inv(method, () -> method.invoke(null, v));
-        };
-    }
+  public static Function<Object, Object> fun(Method method) {
+    return v -> {
+      return inv(method, () -> method.invoke(null, v));
+    };
+  }
 
-    public static <T> Predicate<T> pred(Method method) {
-        return v -> {
-            return inv(method, () -> (boolean) method.invoke(null, v));
-        };
-    }
-    
-    public static <T> Collector<T, ?, List<T>> toList() {
-        return Collectors.toList();
-    }
+  public static <T> Predicate<T> pred(Method method) {
+    return v -> {
+      return inv(method, () -> (boolean) method.invoke(null, v));
+    };
+  }
 
-    private static <T> T inv(Method method, SupplierThrowable<T> supp) {
-        try {
-            return supp.get();
-        } catch (Exception e) {
-            throw new IllegalArgumentException("Unable to invoke method. " + String.valueOf(method), e);
-        }
-    }
+  public static <T> Collector<T, ?, List<T>> toList() {
+    return Collectors.toList();
+  }
 
-    @FunctionalInterface
-    private static interface SupplierThrowable<T> {
-        public T get() throws Exception;
+  private static <T> T inv(Method method, SupplierThrowable<T> supp) {
+    try {
+      return supp.get();
+    } catch (Exception e) {
+      throw new IllegalArgumentException("Unable to invoke method. " + String.valueOf(method), e);
     }
+  }
 
+  @FunctionalInterface
+  private static interface SupplierThrowable<T> {
+    public T get() throws Exception;
+  }
 }

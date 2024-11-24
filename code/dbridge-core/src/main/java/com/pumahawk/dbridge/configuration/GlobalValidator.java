@@ -4,23 +4,22 @@ import java.util.List;
 
 public class GlobalValidator {
 
-    private String name;
-    private List<Validator> validators; 
+  private String name;
+  private List<Validator> validators;
 
-    public String getName() {
-        return name;
-    }
+  public String getName() {
+    return name;
+  }
 
-    public void setName(String name) {
-        this.name = name;
-    }
+  public void setName(String name) {
+    this.name = name;
+  }
 
-    public List<Validator> getValidators() {
-        return validators;
-    }
+  public List<Validator> getValidators() {
+    return validators;
+  }
 
-    public void setValidators(List<Validator> validators) {
-        this.validators = validators;
-    }
-    
+  public void setValidators(List<Validator> validators) {
+    this.validators = validators;
+  }
 }

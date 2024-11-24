@@ -4,34 +4,33 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class Database {
 
-    private String name;
-    private String configurationId;
-    private boolean isDefault;
+  private String name;
+  private String configurationId;
+  private boolean isDefault;
 
-    public String getName() {
-        return name;
-    }
+  public String getName() {
+    return name;
+  }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-    
-    public String getConfigurationId() {
-        return configurationId;
-    }
+  public void setName(String name) {
+    this.name = name;
+  }
 
-    public void setConfigurationId(String configurationId) {
-        this.configurationId = configurationId;
-    }
+  public String getConfigurationId() {
+    return configurationId;
+  }
 
-    @JsonProperty("default")
-    public boolean isDefault() {
-        return isDefault;
-    }
+  public void setConfigurationId(String configurationId) {
+    this.configurationId = configurationId;
+  }
 
-    @JsonProperty("default")
-    public void setDefault(boolean isDefault) {
-        this.isDefault = isDefault;
-    }
-    
+  @JsonProperty("default")
+  public boolean isDefault() {
+    return isDefault;
+  }
+
+  @JsonProperty("default")
+  public void setDefault(boolean isDefault) {
+    this.isDefault = isDefault;
+  }
 }
