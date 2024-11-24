@@ -12,7 +12,7 @@ import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)
-@SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT, classes = BlogPostgresEndToEndTests.Conf.class,
+@SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT, classes = {BlogPostgresEndToEndTests.Conf.class},
 properties = {
     "configuration.path=classpath:/endtoend/config",
     "velocity.file.resource.loader.path=target/test-classes/endtoend/velocity-template",

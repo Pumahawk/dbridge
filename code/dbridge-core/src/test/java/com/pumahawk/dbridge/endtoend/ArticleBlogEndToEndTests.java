@@ -1,6 +1,7 @@
 package com.pumahawk.dbridge.endtoend;
 
 import org.junit.jupiter.api.Test;
+import org.springframework.test.json.JsonCompareMode;
 
 @EndToEndTest
 public class ArticleBlogEndToEndTests extends BlogPostgresEndToEndTests {
@@ -11,7 +12,7 @@ public class ArticleBlogEndToEndTests extends BlogPostgresEndToEndTests {
         client().get().uri("/articles")
             .exchange()
             .expectBody()
-            .json(response, false);
+            .json(response, JsonCompareMode.LENIENT);
     }
 
     @Test
@@ -23,7 +24,7 @@ public class ArticleBlogEndToEndTests extends BlogPostgresEndToEndTests {
                 .build())
             .exchange()
             .expectBody()
-            .json(response, false);
+            .json(response, JsonCompareMode.LENIENT);
     }
 
     @Test
@@ -32,7 +33,7 @@ public class ArticleBlogEndToEndTests extends BlogPostgresEndToEndTests {
         client().get().uri("/articles/1")
             .exchange()
             .expectBody()
-            .json(response, false);
+            .json(response, JsonCompareMode.LENIENT);
     }
 
     @Test
@@ -44,6 +45,6 @@ public class ArticleBlogEndToEndTests extends BlogPostgresEndToEndTests {
                 .build())
             .exchange()
             .expectBody()
-            .json(response, false);
+            .json(response, JsonCompareMode.LENIENT);
     }
 }

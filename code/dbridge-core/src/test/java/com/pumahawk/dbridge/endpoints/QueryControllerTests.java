@@ -14,7 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
-import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.http.HttpStatus;
 import org.springframework.test.web.reactive.server.WebTestClient;
 
@@ -31,7 +31,7 @@ import com.pumahawk.dbridge.services.SimpleQueryResult;
 @EnableAutoConfiguration
 public class QueryControllerTests {
 
-    @MockBean
+    @MockitoBean
     private QueryService queryService;
 
     @Autowired

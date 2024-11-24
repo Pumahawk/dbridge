@@ -14,7 +14,7 @@ import org.springframework.test.web.reactive.server.WebTestClient;
 import com.pumahawk.dbridge.DBridgeCoreApplication;
 
 @EndToEndTest
-public class BlogPostgresEndToEndTests {
+public class BlogPostgresEndToEndTests extends BaseTestConteinerEndToEndTest {
 
     @Autowired
     private WebTestClient client;

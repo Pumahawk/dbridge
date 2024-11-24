@@ -17,7 +17,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.stubbing.Stubber;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.http.HttpMethod;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -34,21 +34,21 @@ import com.pumahawk.dbridge.util.SchemaManager;
 import com.pumahawk.dbridge.util.ValidatorManager;
 
 @SpringBootTest
-@MockBean({
-    DatabaseConnector.class
-})
 public class QueryServiceTests {
+
+    @MockitoBean
+    private DatabaseConnector databaseConnector;
     
-    @MockBean
+    @MockitoBean
     private ConfigurationLoader configurationLoader;
 
-    @MockBean
+    @MockitoBean
     private ValidatorManager validatorManager;
 
-    @MockBean
+    @MockitoBean
     private SqlQueryExecutor sqlQueryExecutor;
 
-    @MockBean
+    @MockitoBean
     private SchemaManager schemaManager;
 
     @Autowired

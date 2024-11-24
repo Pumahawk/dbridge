@@ -2,6 +2,7 @@ package com.pumahawk.dbridge.endtoend;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
+import org.springframework.test.json.JsonCompareMode;
 
 @EndToEndTest
 public class UserBlogEndToEndTests extends BlogPostgresEndToEndTests {
@@ -12,7 +13,7 @@ public class UserBlogEndToEndTests extends BlogPostgresEndToEndTests {
         client().get().uri("/users")
             .exchange()
             .expectBody()
-            .json(response, false);
+            .json(response, JsonCompareMode.LENIENT);
     }
 
     @Test
@@ -24,7 +25,7 @@ public class UserBlogEndToEndTests extends BlogPostgresEndToEndTests {
                 .build())
             .exchange()
             .expectBody()
-            .json(response, false);
+            .json(response, JsonCompareMode.LENIENT);
     }
 
     @Test
@@ -36,7 +37,7 @@ public class UserBlogEndToEndTests extends BlogPostgresEndToEndTests {
                 .build())
             .exchange()
             .expectBody()
-            .json(response, false);
+            .json(response, JsonCompareMode.LENIENT);
     }
 
     @Test
@@ -48,7 +49,7 @@ public class UserBlogEndToEndTests extends BlogPostgresEndToEndTests {
                 .build())
             .exchange()
             .expectBody()
-            .json(response, false);
+            .json(response, JsonCompareMode.LENIENT);
     }
 
     @Test
@@ -72,7 +73,7 @@ public class UserBlogEndToEndTests extends BlogPostgresEndToEndTests {
                 .build())
             .exchange()
             .expectBody()
-            .json(response, false);
+            .json(response, JsonCompareMode.LENIENT);
     }
 
     @Test
@@ -83,7 +84,7 @@ public class UserBlogEndToEndTests extends BlogPostgresEndToEndTests {
                 .build("1"))
             .exchange()
             .expectBody()
-            .json(response, false);
+            .json(response, JsonCompareMode.LENIENT);
     }
 
     @Test
@@ -95,7 +96,7 @@ public class UserBlogEndToEndTests extends BlogPostgresEndToEndTests {
                 .build())
             .exchange()
             .expectBody()
-            .json(response, false);
+            .json(response, JsonCompareMode.LENIENT);
     }
 
     @Test
@@ -107,7 +108,7 @@ public class UserBlogEndToEndTests extends BlogPostgresEndToEndTests {
             .exchange()
             .expectStatus().isEqualTo(HttpStatus.NOT_FOUND)
             .expectBody()
-            .json(response, false);
+            .json(response, JsonCompareMode.LENIENT);
     }
 
     @Test
@@ -119,7 +120,7 @@ public class UserBlogEndToEndTests extends BlogPostgresEndToEndTests {
             .exchange()
             .expectStatus().isEqualTo(HttpStatus.BAD_REQUEST)
             .expectBody()
-            .json(response, false);
+            .json(response, JsonCompareMode.LENIENT);
     }
 
 }

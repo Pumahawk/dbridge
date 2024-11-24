@@ -8,14 +8,14 @@ import javax.sql.DataSource;
 import org.h2.jdbcx.JdbcDataSource;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
-import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.jdbc.datasource.SingleConnectionDataSource;
 
 import com.pumahawk.dbridge.util.DatabaseConnector;
 
 public abstract class JdbcH2Test {
 
-    @MockBean
+    @MockitoBean
     protected DatabaseConnector databaseConnector;
 
     private DataSource dataSource;
